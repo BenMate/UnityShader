@@ -207,8 +207,4 @@ public class PlayerControlsTPS : MonoBehaviour
         rotateOnMove = a_rotate;
     }
 
-
-
-
-
 }
