@@ -79,7 +79,7 @@ public class PlayerControlsTPS : MonoBehaviour
     {
         hasAnimator = TryGetComponent(out animator);
         characterController = GetComponent<CharacterController>();
-        input = GetComponent<InputManagerTPS>();
+        input = InputManagerTPS.instance;
     }
 
     // Update is called once per frame

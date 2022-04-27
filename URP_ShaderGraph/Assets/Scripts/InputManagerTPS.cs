@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class InputManagerTPS : MonoBehaviour
 {
+    public static InputManagerTPS instance => _instance;
+
     // TPS inputs
     public Vector2 move;
     public Vector2 look;
@@ -13,11 +15,24 @@ public class InputManagerTPS : MonoBehaviour
     public bool shoot;
     public bool run;
 
+    public bool pause;
+
     public bool movement;
 
     // Mouse lockers
     public bool cursorLocked = true;
     public bool cursorInputLock = true;
+
+    static InputManagerTPS _instance;
+
+    void Awake()
+    {
+        if (_instance == null)       
+            _instance = this;          
+        else        
+            Destroy(this);
+        
+    }
 
     #region Functions We Call On Button Press
 
@@ -49,6 +64,11 @@ public class InputManagerTPS : MonoBehaviour
     public void RunInput(bool a_runState)
     {
         run = a_runState;
+    }
+
+    public void PauseInput(bool a_pauseState)
+    {
+        pause = a_pauseState;
     }
 
 
@@ -87,16 +107,16 @@ public class InputManagerTPS : MonoBehaviour
         RunInput(a_value.isPressed);
     }
 
-
-
-
+    public void OnPause(InputValue a_value)
+    {
+        PauseInput(a_value.isPressed);
+    }
 
     #endregion
 
     void OnApplicationFocus(bool focus)
     {
         SetCurserState(cursorLocked);
-
     }
 
     void SetCurserState(bool a_state)

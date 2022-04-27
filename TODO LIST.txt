@@ -1,0 +1,16 @@
+
+todo::
+
+
+
+
+
+
+add a gui that toggles a particle effect // done
+
+add a gui that toggles 2 custom materials (shaders)  // one material changes its different shaders ...
+
+add a rifle that follows animations (rigging) //todo
+
+polish animations transitions //todo - aim down sights animation
+
