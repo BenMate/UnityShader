@@ -57,7 +57,7 @@ public class AimOverrideControllerTPS : MonoBehaviour
         currentanimationVec = Vector2.SmoothDamp(currentanimationVec,
             movement, ref animationDirecton, 0.1f, 1.0f);
 
-        animator.SetBool("isStillADS", movement == Vector2.zero ? true : false);
+        animator.SetBool("isStillADS", movement == Vector2.zero);
         animator.SetBool("isMotionADS", inputs.aim);
         animator.SetFloat("ForwardMotion", currentanimationVec.y);
         animator.SetFloat("RightMotion", currentanimationVec.x);

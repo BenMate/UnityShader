@@ -7,19 +7,17 @@ public class MenuUI : MonoBehaviour
     public GameObject fireEffect;
     public GameObject pauseMenu;
 
-    bool isPMActive;
-    bool isPitActive;
+    public GameObject cube;
+    public Material rimLight;
+    public Material electricity;
 
+    MeshRenderer mesh;
     InputManagerTPS inputs;
-
-    
 
     void Start()
     {
-        isPMActive = false;
-        isPitActive = true;
-
         inputs = InputManagerTPS.instance;
+        mesh = cube.GetComponent<MeshRenderer>();
     }
 
     void Update()
@@ -35,8 +33,7 @@ public class MenuUI : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        isPMActive = !isPMActive;
-        pauseMenu.SetActive(isPMActive);
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
 
         //lock the mouse if the game is paused
         Cursor.lockState = pauseMenu.gameObject.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
@@ -45,8 +42,21 @@ public class MenuUI : MonoBehaviour
 
     public void ToggleFirePitParticles()
     {
-        isPitActive = !isPitActive;
-        fireEffect.SetActive(isPitActive);
+        fireEffect.SetActive(!fireEffect.activeSelf);
     }
 
+    public void ChangeMatToElectricity()
+    {
+        mesh.material = electricity;
+    }
+
+    public void ChangeMatToRimLight()
+    {
+        mesh.material = rimLight;
+    }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 }
