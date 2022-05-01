@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.Animations.Rigging;
 
 public class AimOverrideControllerTPS : MonoBehaviour
 {
@@ -44,6 +45,8 @@ public class AimOverrideControllerTPS : MonoBehaviour
 
     public Transform aimMarkerTransform;
 
+    public MultiAimConstraint mac;
+
     void Awake()
     {
         controller = GetComponent<PlayerControlsTPS>();
@@ -57,6 +60,7 @@ public class AimOverrideControllerTPS : MonoBehaviour
         currentanimationVec = Vector2.SmoothDamp(currentanimationVec,
             movement, ref animationDirecton, 0.1f, 1.0f);
 
+        //set animator values
         animator.SetBool("isStillADS", movement == Vector2.zero);
         animator.SetBool("isMotionADS", inputs.aim);
         animator.SetFloat("ForwardMotion", currentanimationVec.y);
@@ -78,13 +82,14 @@ public class AimOverrideControllerTPS : MonoBehaviour
             mouseWorldPos = ray.GetPoint(missedRaycastDistance);
         }
             
-        
+        //if aiming down sites is true
         if (inputs.aim)
         {
             aimCam.gameObject.SetActive(true);
             controller.SetCamSensitivity(aimCamSensitivity);
             controller.SetRotationOnMove(false);
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1.0f, Time.deltaTime * animationlayerTransitionRate));
+            mac.weight = Mathf.Lerp(mac.weight, 1.0f, Time.deltaTime * animationlayerTransitionRate); //transition into aiming
 
             Vector3 aimTarget = mouseWorldPos;
             aimTarget.y = transform.position.y;
@@ -98,6 +103,7 @@ public class AimOverrideControllerTPS : MonoBehaviour
             controller.SetCamSensitivity(aimCamSensitivity);
             controller.SetRotationOnMove(true);
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0.0f, Time.deltaTime * animationlayerTransitionRate));
+            mac.weight = Mathf.Lerp(mac.weight, 0.0f, Time.deltaTime * animationlayerTransitionRate); //transition out of aiming
         }
 
     }
